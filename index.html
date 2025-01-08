@@ -4,92 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Clothes Changer - Try Virtual Clothing</title>
-    <meta name="description" content="Experience the future of fashion with our AI Clothes Changer. Try different outfits virtually and transform your shopping experience.">
+    <meta name="description" content="Transform your outfits virtually with AI technology">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 </head>
 <body>
     <div id="app">
-        <header>
-            <nav class="navbar">
-                <div class="logo">AI Clothes Changer</div>
-                <div class="nav-links">
-                    <a href="#home">Home</a>
-                    <a href="#features">Features</a>
-                    <a href="#try-now">Try Now</a>
-                    <a href="https://saifs.ai/ai-cloth-changer" class="cta-button">Visit Main Site</a>
-                </div>
-            </nav>
-        </header>
+        <div class="page-container">
+            <div class="main-content">
+                <h1>AI Clothes Changer</h1>
+                <div class="title-underline"></div>
+                <p class="subtitle">Transform your outfits virtually with AI technology</p>
 
-        <main>
-            <section class="hero" id="home">
-                <div class="hero-content">
-                    <h1>Transform Your Look with AI</h1>
-                    <p>Experience the future of fashion with our advanced AI clothes changer</p>
-                    <a href="https://saifs.ai/ai-cloth-changer" class="try-button">Try Now</a>
-                </div>
-            </section>
-
-            <section class="image-changer" id="try-now">
-                <div class="container">
+                <div class="upload-container">
                     <div class="upload-section">
-                        <div class="preview-box" :style="{ backgroundImage: previewImage ? 'url(' + previewImage + ')' : 'none' }">
-                            <div v-if="!previewImage" class="upload-placeholder">
-                                <span>Upload your photo</span>
+                        <div class="upload-box">
+                            <div class="upload-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="#6366f1" stroke-width="1.5"/>
+                                    <path d="M20 21C20 16.5817 16.4183 13 12 13C7.58172 13 4 16.5817 4 21" stroke="#6366f1" stroke-width="1.5"/>
+                                </svg>
                             </div>
-                            <img v-if="previewImage" :src="previewImage" alt="Preview">
+                            <h3>Upload Your Photo</h3>
+                            <p class="upload-text">or drag and drop</p>
+                            <input type="file" @change="handlePersonImageUpload" accept="image/*" ref="personFileInput" class="file-input">
+                            <button @click="triggerPersonFileInput" class="choose-file-btn">Choose File</button>
                         </div>
-                        <input type="file" @change="handleImageUpload" accept="image/*" ref="fileInput">
-                        <button @click="triggerFileInput" class="upload-btn">Upload Image</button>
                     </div>
-                    <div class="clothes-options">
-                        <h3>Select Clothing Style</h3>
-                        <div class="style-grid">
-                            <div v-for="(style, index) in clothingStyles" 
-                                 :key="index" 
-                                 class="style-option"
-                                 :class="{ active: selectedStyle === index }"
-                                 @click="selectStyle(index)">
-                                {{ style.name }}
+
+                    <div class="controls-section">
+                        <select v-model="selectedBodyPart" class="body-part-select">
+                            <option value="">Upper Body</option>
+                            <option value="shirt">Shirt</option>
+                            <option value="jacket">Jacket</option>
+                            <option value="dress">Dress</option>
+                        </select>
+                        <a href="https://saifs.ai/ai-cloth-changer" class="try-on-btn">
+                            <span class="try-on-icon">✨</span>
+                            Try On
+                        </a>
+                    </div>
+
+                    <div class="upload-section">
+                        <div class="upload-box">
+                            <div class="upload-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 7L9 4L15 7L21 4V17L15 20L9 17L3 20V7Z" stroke="#6366f1" stroke-width="1.5"/>
+                                    <path d="M9 4V17M15 7V20" stroke="#6366f1" stroke-width="1.5"/>
+                                </svg>
                             </div>
+                            <h3>Upload Garment</h3>
+                            <p class="upload-text">Click here or drag and drop</p>
+                            <input type="file" @change="handleGarmentImageUpload" accept="image/*" ref="garmentFileInput" class="file-input">
+                            <button @click="triggerGarmentFileInput" class="choose-file-btn">Choose File</button>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <section class="features" id="features">
-                <h2>Key Features</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🎯</div>
-                        <h3>Accurate Fitting</h3>
-                        <p>Advanced AI ensures perfect virtual fitting</p>
+                <div class="pro-section">
+                    <div class="pro-divider">
+                        <span>For Professional Features</span>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <h3>Real-time Preview</h3>
-                        <p>See changes instantly as you try different styles</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🎨</div>
-                        <h3>Multiple Styles</h3>
-                        <p>Choose from various fashion styles and trends</p>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer>
-            <div class="footer-content">
-                <p>Powered by <a href="https://saifs.ai/ai-cloth-changer">Saifs.ai</a></p>
-                <div class="social-links">
-                    <a href="#" class="social-link">Twitter</a>
-                    <a href="#" class="social-link">Instagram</a>
-                    <a href="#" class="social-link">Facebook</a>
+                    <a href="https://saifs.ai/ai-cloth-changer" class="pro-btn">
+                        <span class="pro-icon">⭐</span>
+                        Try Pro Version
+                    </a>
                 </div>
             </div>
-        </footer>
+        </div>
     </div>
     <script src="app.js"></script>
 </body>
